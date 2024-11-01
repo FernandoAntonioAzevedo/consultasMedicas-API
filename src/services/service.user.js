@@ -39,8 +39,6 @@ async function Profile(id_user) {
     return user;
 }
 
-
-
 async function InserirAdmin(name, email, password) {
 
     const hashPassword = await bcrypt.hash(password, 10);
@@ -71,4 +69,13 @@ async function LoginAdmin(email, password) {
     return user;
 }
 
-export default { Inserir, Login, Profile, InserirAdmin, LoginAdmin }
+async function Listar() {
+
+    const users = await repoUser.Listar();
+
+    return users;
+}
+
+
+
+export default { Inserir, Login, Profile, InserirAdmin, LoginAdmin, Listar }

@@ -10,9 +10,7 @@ async function Listar(req, res) {
 
 async function Inserir(req, res) {
 
-    /* também pode ser feito assim, acessando as infos do corpo
-    da requisição um a um. A forma mais verborrajica de fazer...
-    
+    /*
     const name = req.body.name;
     const specialty = req.body.specialty;
     const icon = req.body.icon;

@@ -6,7 +6,8 @@ async function Listar(id_user, dt_start, dt_end, id_doctor) {
 
     let sql = `select a.id_appointment, s.description as service, 
     d.name as doctor, d.specialty,
-   a.booking_date, a.booking_hour, u.name as user, ds.price
+   a.booking_date, a.booking_hour, u.name as user, ds.price, a.id_doctor, 
+   a.id_service, a.id_user
 from appointments a
 join services s on (s.id_service = a.id_service)
 join doctors d on (d.id_doctor = a.id_doctor)
@@ -35,12 +36,30 @@ where a.id_appointment > 0 `;
         sql = sql + "and a.id_doctor = ? "
     }
 
-
-    sql = sql + "order by a.booking_date, a.booking_hour"
+    sql = sql + "order by a.booking_date, a.booking_hour";
 
     const appointments = await query(sql, filtro);
 
     return appointments;
+}
+
+async function ListarId(id_appointment) {
+
+    let sql = `select a.id_appointment, s.description as service, 
+    d.name as doctor, d.specialty,
+   a.booking_date, a.booking_hour, u.name as user, ds.price, a.id_doctor, 
+   a.id_service, a.id_user
+from appointments a
+join services s on (s.id_service = a.id_service)
+join doctors d on (d.id_doctor = a.id_doctor)
+join users u on (u.id_user = a.id_user)
+join doctors_services ds on (ds.id_doctor = a.id_doctor and 
+                        ds.id_service = a.id_service)
+where a.id_appointment = ? `;
+
+    const appointments = await query(sql, [id_appointment]);
+
+    return appointments[0];
 }
 
 async function Inserir(id_user,
@@ -59,11 +78,24 @@ async function Inserir(id_user,
 async function Excluir(id_user, id_appointment) {
 
     let sql = `delete from appointments 
-    where id_appointment=? and id_user=?,`;
+    where id_appointment=?`;
 
-    await query(sql, [id_user, id_appointment]);
+    await query(sql, [id_appointment]);
 
     return { id_appointment };
 }
 
-export default { Listar, Inserir, Excluir }
+async function Editar(id_appointment, id_user,
+    id_doctor, id_service, booking_date, booking_hour) {
+
+    let sql = `update appointments set id_user=?, id_doctor=?, 
+    id_service=?, booking_date=?, booking_hour=? 
+    where id_appointment=?`;
+
+    await query(sql, [id_user,
+        id_doctor, id_service, booking_date, booking_hour, id_appointment]);
+
+    return { id_appointment };
+}
+
+export default { Listar, Inserir, Excluir, ListarId, Editar }

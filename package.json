@@ -1,7 +1,7 @@
 {
-  "name": "agendei-mobile-api",
+  "name": "agendei-api",
   "version": "1.0.0",
-  "description": "Iniciando a construção da API e o Banco de dados da aplicação consultas médicas. Estou utilizado o NodeJs para o backend",
+  "description": "",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "agendei-mobile-api": "file:",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.21.1",

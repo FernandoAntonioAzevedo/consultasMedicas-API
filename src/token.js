@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const secretToken = "consultas-medicas120248";
+const secretToken = "jornadaJS123";
 
 function CreateToken(id_user) {
     const token = jwt.sign({ id_user }, secretToken, {
